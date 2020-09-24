@@ -1,6 +1,5 @@
 # nlproc-coding
-
-## Here is my nlp codes
+Here is my nlp codes
 
 ## Resource List
 - [ ] [言語処理100本ノック 2020 (Rev 1)](https://nlp100.github.io/ja/)
@@ -12,10 +11,6 @@
 - [ ] 坪井祐太・海野裕也・鈴木潤（2017）『深層学習による自然言語処理』講談社
 - [ ] Python 機械学習プログラミング 第2版
 - [ ] 中山光樹（2020）『機械学習・深層学習による自然言語処理入門』マイナビ出版
-
-- 黒橋本
-- 高村本→わかパタわけがわかる機械学習→→深層学習自然言語処理
-- Pythonデータ分析→機械学習・深層学習による自然言語処理入門→Python機械学習→ITエンジニア機械学習理論
 
 ## Ref
 - [自然言語処理を学ぶ推薦書籍](http://cl.sd.tmu.ac.jp/prospective/readings#TOC-2019-)
