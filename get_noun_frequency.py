@@ -3,56 +3,43 @@ import itertools
 import collections
 import string
 
-DATA_TXT_PATH = ''
+DATA_TXT_PATH = 'test_text.txt'
 
-
-def split_text_only_noun(text):
+def get_noun_list(text):
     tokenizer = MeCab.Tagger()
     node = tokenizer.parseToNode(text)
-    keywords = []
+    nouns = []
     while node:
         if node.feature.split(",")[0] == u"名詞":
-            keywords.append(node.surface)
-            print(keywords)
+            nouns.append(node.surface)
         node = node.next
-    return ','.join(keywords)
-
-with open(DATA_TXT_PATH, 'r', encoding='utf-8') as data_file:
-        txt_data = data_file.read().splitlines()
+    return ','.join(nouns)
 
 
+def clean_text(string_list):
+    noun_list = []
+    for element in list(itertools.chain.from_iterable(string_list)):
+        table = str.maketrans('', '', string.punctuation)
+        noun_list.append(element.translate(table))
+    nouns_list = []
+    while noun_list:
+        noun = noun_list.pop()
+        if noun != '':
+            nouns_list.append(noun)
+    return nouns_list
 
-#１つ1つのリストaの要素を形態素解析して名詞抽出
-r_aa = []
 
-for aa in a:
-     r_a = ''.join(split_text_only_noun(aa)).split(',')
-     r_aa.append(r_a)
-
-#形態素解析、リストの平坦化、記号の削除
-r_aa = list(itertools.chain.from_iterable(r_aa))
-kigo = string.punctuation
-table = str.maketrans( '', '',kigo)
-
-word_list = []
-for bb in r_aa:
-    word_list.append(bb.translate(table))
-
-#空白を削除
-count = 0
-words_list = []
-while count < len(word_list):
-    if word_list[count] != '':
-        words_list.append(word_list[count])
-    count += 1
-
-#単語の頻出数
-count_num = 0
-c = collections.Counter(words_list)
-
-#テキストに書き込み
-with open('結果.txt',mode='w') as f:
-    for word,count in c.most_common():
-        if  count > 50:
-            f.writelines(str(f"{word}:{count}"))
+def output_noun_frequency(nouns_list):
+    with open('result.txt',mode='w') as f:
+        for noun, freq in collections.Counter(nouns_list).most_common():
+            if  freq > 29:
+                f.writelines(str(f"{noun}:{freq}"))
             f.writelines("\n")
+
+
+if __name__ == '__main__':
+    with open(DATA_TXT_PATH, 'r', encoding='utf-8') as data_file:
+        text_data = data_file.read().splitlines()
+        noun_list = [''.join(get_noun_list(line)).split(',') for line in text_data]
+        nouns_list = clean_text(noun_list)
+        output_noun_frequency(nouns_list)
